@@ -1,0 +1,15 @@
+podman-compose up -d  # 若无 podman-compose，用 `podman play kube` 替代（需转换 YAML）
+podman ps --format "{{.Names}}" # 找到你要生成的容器名
+# 然后对每个容器运行（比如 nextcloud）
+podman generate systemd  --name nextcloud --files --restart-policy=always
+# 会生成一个文件
+container-nextcloud.service
+# 复制到用户 systemd 目录
+mkdir -p ~/.config/systemd/user
+cp container-nextcloud.service ~/.config/systemd/user/
+# 启用并启动服务
+systemctl --user daemon-reexec
+systemctl --user daemon-reload
+systemctl --user enable --now container-nextcloud.service
+# 开机自启
+loginctl enable-linger $USER 
