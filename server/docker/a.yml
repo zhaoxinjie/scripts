@@ -1,0 +1,104 @@
+services:
+  caddy:
+    image: caddy:2
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+      - 9980:9980
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy_data:/data
+    networks:
+      - caddy_network
+
+  nc_db:
+    image: mariadb:10.5
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: always
+    volumes:
+      - ./db_data:/var/lib/mysql
+    networks:
+      - nc_network
+    environment:
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_ROOT_PASSWORD=nextcloud
+      - MYSQL_PASSWORD=nextcloud
+
+  nc_redis:
+    image: redis:alpine
+    restart: always
+    networks:
+      - nc_network
+
+  nc:
+    image: nextcloud:apache
+    restart: always
+    volumes:
+      - ./nc_data:/var/www/html
+    hostname: cloud.treemonkey.fun
+    environment:
+      - REDIS_HOST=nc_redis
+      - MYSQL_HOST=nc_db
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=nextcloud
+      - OVERWRITEPROTOCOL=https
+      - NEXTCLOUD_TRUSTED_DOMAINS='cloud.treemonkey.fun'
+    depends_on:
+      - nc_db
+      - nc_redis
+    networks:
+    - caddy_network
+    - nc_network
+
+  nc_cron:
+    image: nextcloud:apache
+    restart: always
+    volumes:
+      - ./nc_data:/var/www/html
+    entrypoint: /cron.sh
+    depends_on:
+      - nc_db
+      - nc_redis
+    networks:
+      - nc_network
+
+  lab:
+    image: quay.io/jupyter/base-notebook
+    volumes:
+      - ./lab_data:/home/jovyan/work
+    restart: always
+    networks:
+      - caddy_network
+
+  ql:
+    image: whyour/qinglong:latest
+    volumes:
+      - ./ql_data:/ql/data
+    restart: always
+    networks:
+      - caddy_network
+
+  wp_db:
+    image: mariadb:10.5
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - ./wp_db_data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=wordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
+    networks:
+     - wp_network
+
+  wp:
+    image: wordpress:latest
+    volumes:
+     - ./wp_data:/var/www/html
+    restart: always
+    depends_on:
+      - wp_db
