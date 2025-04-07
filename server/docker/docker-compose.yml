@@ -103,9 +103,9 @@ services:
     depends_on:
       - wp_db
   networks:  # 新增部分：定义所有自定义网络
-  caddy_network:
-    driver: bridge
-  nc_network:
-    driver: bridge
-  wp_network:
-    driver: bridge
+    caddy_network:
+      driver: bridge
+    nc_network:
+      driver: bridge
+    wp_network:
+      driver: bridge
