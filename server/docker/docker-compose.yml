@@ -3,6 +3,7 @@ services:
   caddy:
     image: caddy:2
     restart: always
+    container_name: caddy  # 指定容器名称
     ports:
       - 80:80
       - 443:443
@@ -17,6 +18,7 @@ services:
     image: mariadb:10.5
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: always
+    container_name: nc_db  # 指定容器名称
     volumes:
       - ./db_data:/var/lib/mysql
     networks:
@@ -29,6 +31,7 @@ services:
 
   nc_redis:
     image: redis:alpine
+    container_name: nc_redis  # 指定容器名称
     restart: always
     networks:
       - nc_network
@@ -38,7 +41,8 @@ services:
     restart: always
     volumes:
       - ./nc_data:/var/www/html
-    hostname: cloud.treemonkey.fun
+    hostname: opencodething.top
+    container_name: nextcloud  # 指定容器名称
     environment:
       - REDIS_HOST=nc_redis
       - MYSQL_HOST=nc_db
@@ -46,7 +50,7 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_PASSWORD=nextcloud
       - OVERWRITEPROTOCOL=https
-      - NEXTCLOUD_TRUSTED_DOMAINS='cloud.treemonkey.fun'
+      - NEXTCLOUD_TRUSTED_DOMAINS='opencodething.top'
     depends_on:
       - nc_db
       - nc_redis
@@ -56,6 +60,7 @@ services:
 
   nc_cron:
     image: nextcloud:apache
+    container_name: nc_cron  # 指定容器名称
     restart: always
     volumes:
       - ./nc_data:/var/www/html
@@ -71,6 +76,7 @@ services:
     volumes:
       - ./lab_data:/home/jovyan/work
     restart: always
+    container_name: lab  # 指定容器名称
     networks:
       - caddy_network
 
@@ -79,6 +85,7 @@ services:
     volumes:
       - ./ql_data:/ql/data
     restart: always
+    container_name: ql  # 指定容器名称
     networks:
       - caddy_network
 
@@ -88,6 +95,7 @@ services:
     volumes:
       - ./wp_db_data:/var/lib/mysql
     restart: always
+    container_name: wp_db  # 指定容器名称
     environment:
       - MYSQL_ROOT_PASSWORD=wordpress
       - MYSQL_DATABASE=wordpress
@@ -101,6 +109,7 @@ services:
     volumes:
      - ./wp_data:/var/www/html
     restart: always
+    container_name: wordpress  # 指定容器名称
     depends_on:
       - wp_db
 networks:  # 新增部分：定义所有自定义网络
