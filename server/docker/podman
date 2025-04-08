@@ -1,3 +1,4 @@
+podman-compose down  # 清理旧容器
 podman-compose up -d  # 若无 podman-compose，用 `podman play kube` 替代（需转换 YAML）
 podman ps --format "{{.Names}}" # 找到你要生成的容器名
 # 然后对每个容器运行（比如 nextcloud）
@@ -13,3 +14,9 @@ systemctl --user daemon-reload
 systemctl --user enable --now container-nextcloud.service
 # 开机自启
 loginctl enable-linger $USER 
+
+
+# 查找容器	podman ps -a | grep caddy
+# 查看日志	podman logs caddy
+# 启动容器	podman start caddy
+# 删除重建	podman rm caddy && podman run ...
