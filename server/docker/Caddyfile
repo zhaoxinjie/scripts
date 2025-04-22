@@ -1,0 +1,12 @@
+cloud.opencodething.top {
+  reverse_proxy nc:80
+}
+lab.opencodething.top {
+  reverse_proxy lab:8888
+}
+ql.opencodething.top {
+  reverse_proxy ql:5700
+}
+wp.opencodething.top {
+  reverse_proxy wp:80
+}

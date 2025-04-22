@@ -4,7 +4,7 @@ services:
     image: caddy:2
     restart: always
     container_name: caddy  # 指定容器名称
-    ports:
+    ports: # 只有Caddy对外暴露端口
       - 80:80
       - 443:443
       - 9980:9980
@@ -50,7 +50,7 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_PASSWORD=nextcloud
       - OVERWRITEPROTOCOL=https
-      - NEXTCLOUD_TRUSTED_DOMAINS='opencodething.top'
+      - NEXTCLOUD_TRUSTED_DOMAINS='opencodething.top' # 自己的域名
     depends_on:
       - nc_db
       - nc_redis
