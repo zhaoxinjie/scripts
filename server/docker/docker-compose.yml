@@ -112,6 +112,9 @@ services:
     container_name: wordpress  # 指定容器名称
     depends_on:
       - wp_db
+    networks:
+     - wp_network
+     - caddy_network
 networks:  # 新增部分：定义所有自定义网络
   caddy_network:
     driver: bridge
