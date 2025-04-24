@@ -1,5 +1,5 @@
 cloud.opencodething.top {
-  reverse_proxy nc:80
+  reverse_proxy nextcloud:80
 }
 lab.opencodething.top {
   reverse_proxy lab:8888
@@ -7,6 +7,6 @@ lab.opencodething.top {
 ql.opencodething.top {
   reverse_proxy ql:5700
 }
-wp.opencodething.top {
-  reverse_proxy wp:80
+blog.opencodething.top {
+  reverse_proxy wordpress:80
 }
