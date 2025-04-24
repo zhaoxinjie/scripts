@@ -2,6 +2,7 @@ version: '1.0'
 services:
   caddy:
     image: caddy:2
+    user: root
     restart: always
     container_name: caddy  # 指定容器名称
     ports: # 只有Caddy对外暴露端口
@@ -38,6 +39,7 @@ services:
 
   nc:
     image: nextcloud:apache
+    user: root
     restart: always
     volumes:
       - ./nc_data:/var/www/html:Z
@@ -73,6 +75,7 @@ services:
 
   lab:
     image: quay.io/jupyter/base-notebook
+    user: root
     volumes:
       - ./lab_data:/home/jovyan/work:Z
     restart: always
@@ -82,6 +85,7 @@ services:
 
   ql:
     image: whyour/qinglong:latest
+    user: root
     volumes:
       - ./ql_data:/ql/data:Z
     restart: always
@@ -106,6 +110,7 @@ services:
 
   wp:
     image: wordpress:latest
+    user: root
     volumes:
      - ./wp_data:/var/www/html:Z
     restart: always
