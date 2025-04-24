@@ -120,10 +120,22 @@ services:
     networks:
      - wp_network
      - caddy_network
+  hot:
+    image: rehiy/dailyhot
+    user: root
+    volumes:
+      - ./hot_data:/var/www/html:Z
+    restart: always
+    container_name: dayhot  # 指定容器名称
+    networks:
+      - caddy_network
+      - hot_network
 networks:  # 新增部分：定义所有自定义网络
   caddy_network:
     driver: bridge
   nc_network:
     driver: bridge
   wp_network:
+    driver: bridge
+  hot_network:
     driver: bridge
