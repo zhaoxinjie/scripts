@@ -121,7 +121,7 @@ services:
      - wp_network
      - caddy_network
   hot:
-    image: rehiy/dailyhot
+    image: liwangsheng/dailyhot-web
     user: root
     volumes:
       - ./hot_data:/var/www/html:Z
