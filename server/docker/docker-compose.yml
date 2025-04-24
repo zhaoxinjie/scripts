@@ -2,7 +2,7 @@ version: '1.0'
 services:
   caddy:
     image: caddy:2
-    user: root
+    user: root  # 指定root用户执行，避免premission denied
     restart: always
     container_name: caddy  # 指定容器名称
     ports: # 只有Caddy对外暴露端口
@@ -10,7 +10,7 @@ services:
       - 443:443
       - 9980:9980
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:Z
+      - ./Caddyfile:/etc/caddy/Caddyfile:Z  # 给所有 volume 后面加 :Z，让 Podman 自动设置 SELinux 标签：
       - ./caddy_data:/data:Z
     networks:
       - caddy_network
