@@ -127,6 +127,9 @@ services:
       - ./hot_data:/var/www/html:Z
     restart: always
     container_name: dayhot  # 指定容器名称
+    environment:
+      - API=https://hot-api.bbit.fun
+      - ICP=没有备案捏
     networks:
       - caddy_network
       - hot_network
