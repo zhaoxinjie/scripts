@@ -9,8 +9,8 @@ services:
       - 443:443
       - 9980:9980
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./caddy_data:/data
+      - ./Caddyfile:/etc/caddy/Caddyfile:Z
+      - ./caddy_data:/data:Z
     networks:
       - caddy_network
 
@@ -20,7 +20,7 @@ services:
     restart: always
     container_name: nc_db  # 指定容器名称
     volumes:
-      - ./db_data:/var/lib/mysql
+      - ./db_data:/var/lib/mysql:Z
     networks:
       - nc_network
     environment:
@@ -40,7 +40,7 @@ services:
     image: nextcloud:apache
     restart: always
     volumes:
-      - ./nc_data:/var/www/html
+      - ./nc_data:/var/www/html:Z
     hostname: opencodething.top
     container_name: nextcloud  # 指定容器名称
     environment:
@@ -63,7 +63,7 @@ services:
     container_name: nc_cron  # 指定容器名称
     restart: always
     volumes:
-      - ./nc_data:/var/www/html
+      - ./nc_data:/var/www/html:Z
     entrypoint: /cron.sh
     depends_on:
       - nc_db
@@ -74,7 +74,7 @@ services:
   lab:
     image: quay.io/jupyter/base-notebook
     volumes:
-      - ./lab_data:/home/jovyan/work
+      - ./lab_data:/home/jovyan/work:Z
     restart: always
     container_name: lab  # 指定容器名称
     networks:
@@ -83,7 +83,7 @@ services:
   ql:
     image: whyour/qinglong:latest
     volumes:
-      - ./ql_data:/ql/data
+      - ./ql_data:/ql/data:Z
     restart: always
     container_name: ql  # 指定容器名称
     networks:
@@ -93,7 +93,7 @@ services:
     image: mariadb:10.5
     command: '--default-authentication-plugin=mysql_native_password'
     volumes:
-      - ./wp_db_data:/var/lib/mysql
+      - ./wp_db_data:/var/lib/mysql:Z
     restart: always
     container_name: wp_db  # 指定容器名称
     environment:
@@ -107,7 +107,7 @@ services:
   wp:
     image: wordpress:latest
     volumes:
-     - ./wp_data:/var/www/html
+     - ./wp_data:/var/www/html:Z
     restart: always
     container_name: wordpress  # 指定容器名称
     depends_on:
