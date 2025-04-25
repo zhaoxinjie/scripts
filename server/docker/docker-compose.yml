@@ -120,25 +120,10 @@ services:
     networks:
      - wp_network
      - caddy_network
-  hot:
-    image: liwangsheng/dailyhot-web
-    user: root
-    volumes:
-      - ./hot_data:/var/www/html:Z
-    restart: always
-    container_name: dayhot  # 指定容器名称
-    environment:
-      - API=https://hot-api.bbit.fun
-      - ICP=没有备案捏
-    networks:
-      - caddy_network
-      - hot_network
 networks:  # 新增部分：定义所有自定义网络
   caddy_network:
     driver: bridge
   nc_network:
     driver: bridge
   wp_network:
-    driver: bridge
-  hot_network:
     driver: bridge
