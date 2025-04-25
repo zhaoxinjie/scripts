@@ -120,25 +120,33 @@ services:
     networks:
      - wp_network
      - caddy_network
-  hot:
-    image: liwangsheng/dailyhot-web
-    user: root
+  chat_bot:
+    image: chatgpt-on-wechat
     volumes:
-      - ./hot_data:/var/www/html:Z
+      - ./chat_data:/var/my_chat/data:Z
+      - ./config.yaml:/app/config.yaml:Z
     restart: always
-    container_name: dayhot  # 指定容器名称
-    environment:
-      - API=https://hot-api.bbit.fun
-      - ICP=没有备案捏
-    networks:
-      - caddy_network
-      - hot_network
+    container_name: chat_bot # 容器名
+
+  v2ray:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    image: v2ray/official:latest
+    container_name: v2ray
+    ports:
+      - 9527:9527
+      - 9528:9528
+      - 9529:9529
+    volumes:
+      - ./conf:/etc/v2ray:Z
+      - ./logs:/var/log/v2ray:Z
+
 networks:  # 新增部分：定义所有自定义网络
   caddy_network:
     driver: bridge
   nc_network:
     driver: bridge
   wp_network:
-    driver: bridge
-  hot_network:
     driver: bridge

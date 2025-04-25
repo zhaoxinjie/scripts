@@ -10,6 +10,3 @@ ql.opencodething.top {
 blog.opencodething.top {
   reverse_proxy wordpress:80
 }
-hot.opencodething.top {
-  reverse_proxy dayhot:80
-}
