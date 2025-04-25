@@ -1,0 +1,6 @@
+FROM v2ray/official:latest
+VOLUME ["/etc/v2ray/","/var/log/v2ray/"]
+# EXPOSE 端口暴露可写可不写
+EXPOSE 9527 9528 9529
+# 这里CMD 只是示例，不用写的，因为官方原镜像就执行了
+CMD ["v2ray" ,"-config=/etc/v2ray/config.json"]
