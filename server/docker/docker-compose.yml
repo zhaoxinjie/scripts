@@ -131,9 +131,9 @@ services:
   v2ray:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: V2rayDockerfile
     restart: always
-    image: v2ray/official:latest
+    image: my/v2ray:latest
     container_name: v2ray
     ports:
       - 9527:9527
