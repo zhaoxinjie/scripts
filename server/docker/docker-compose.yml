@@ -122,6 +122,7 @@ services:
      - caddy_network
   chat_bot:
     image: chatgpt-on-wechat
+    user: root
     volumes:
       - ./chat_data:/var/my_chat/data:Z
       - ./config.yaml:/app/config.yaml:Z
@@ -133,6 +134,7 @@ services:
       context: ./
       dockerfile: V2rayDockerfile
     restart: always
+    user: root
     image: my/v2ray:latest
     container_name: v2ray
     ports:
