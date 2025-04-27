@@ -1,0 +1,24 @@
+# 忽略 node_modules 目录
+node_modules/
+
+# 忽略日志文件
+*.log
+
+# 忽略本地环境变量
+.env
+
+# 忽略编译生成目录
+dist/
+build/
+
+# 忽略临时文件
+*.tmp
+*.swp
+.DS_Store  # macOS下生成的垃圾文件
+
+# 忽略 IDE 配置文件
+.vscode/
+.idea/
+
+# 忽略 Dockerfile 构建缓存
+docker-compose.override.yml
