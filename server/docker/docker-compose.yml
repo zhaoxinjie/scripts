@@ -123,9 +123,8 @@ services:
   chat_bot:
     image: chatgpt-on-wechat
     user: root
-    volumes:
-      - ./chat_data:/var/my_chat/data:Z
-      - ./config.yaml:/app/config.yaml:Z
+    env_file:
+     - chat.env:Z
     restart: always
     container_name: chat_bot # 容器名
 
