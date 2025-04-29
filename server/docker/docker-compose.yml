@@ -116,6 +116,11 @@ services:
      - ./wp_data:/var/www/html:Z
     restart: always
     container_name: wordpress  # 指定容器名称
+    environment:
+      - WORDPRESS_DB_HOST=wp_db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
     depends_on:
       - wp_db
     networks:
