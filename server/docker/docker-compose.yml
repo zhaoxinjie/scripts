@@ -147,7 +147,7 @@ services:
       - 9528:9528
       - 9529:9529
     volumes:
-      - ./conf:/etc/v2ray:Z
+      - ../conf/config.json:/etc/v2ray:Z
       - ./logs:/var/log/v2ray:Z
 
 networks:  # 新增部分：定义所有自定义网络
