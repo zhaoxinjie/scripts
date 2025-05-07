@@ -148,6 +148,20 @@ services:
       - ./logs:/var/log/v2ray:Z
     environment:
       - TZ=Asia/Shanghai           # 时区设置
+  shadowsocks-libev:
+    container_name: sslib
+    image: acrisliu/shadowsocks-libev:latest
+    user: root
+    ports:
+      - "9528:9528/tcp"
+      - "9528:9528/udp"
+    volumes:
+      - /home/username/.acme.sh:/root/.acme.sh:ro
+    environment:
+      - METHOD=aes-256-gcm
+      - PASSWORD=123456
+      - ARGS=--plugin v2ray-plugin --plugin-opts server;mode=tls;host=opencodething.top;path=/v2ray;cert=/root/.acme.sh/opencodething.top/fullchain.cer;key=/root/.acme.sh/opencodething.top/opencodething.top.key -u
+    restart: always
 
 networks:  # 新增部分：定义所有自定义网络
   caddy_network:
